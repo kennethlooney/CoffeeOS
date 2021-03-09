@@ -9,7 +9,6 @@ Below is a list of tasks that I have layed out for myself for the project.
 - Setup Inital Project
 - Setup a *Development* branch for me to do my work on.
 
-
 ### What got me into the idea of trying write an operating system
 
 Well about a year ago now, I had to go on full disability because of some medical issues. I had nothing to do through out my day except for loafing around and being depressed that I no longer had anything to do with my day or in my case *night*. I was a care giver for about 15 years.
