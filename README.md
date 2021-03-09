@@ -6,7 +6,7 @@ A x64 UEFI enabled operating system project being built while drinking lots of c
 
 Below is a list of tasks that I have layed out for myself for the project.
 
-[x] Setup Inital Project
+- Setup Inital Project
 
 
 ### What got me into the idea of trying write an operating system
