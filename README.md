@@ -11,7 +11,7 @@ Below is a list of tasks that I have layed out for myself for the project.
 
 ### What got me into the idea of trying write an operating system
 
-Well about a year ago now, I had to go on full diability because of some medical issues. I had nothing to do through out my day except for loafing around and being depressed that I no longer had anything to do with my day or in my case *night*. I was a care giver for about 15 years.
+Well about a year ago now, I had to go on full disability because of some medical issues. I had nothing to do through out my day except for loafing around and being depressed that I no longer had anything to do with my day or in my case *night*. I was a care giver for about 15 years.
 
 Plus as a hobby programmer for the past 20 plus years I have always wanted to learn what it takes to run a computer and hardware. I've taken many programming classes over the years but none that involved working directly interfacing with hardware.
 
