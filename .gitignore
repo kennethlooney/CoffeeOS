@@ -1,3 +1,8 @@
+*.elf
+*.efi
+*.iso
+*.bin
+
 # Prerequisites
 *.d
 
