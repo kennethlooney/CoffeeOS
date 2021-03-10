@@ -10,6 +10,51 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             }
+        },
+        {
+            "label": "Build Bootloader",
+            "type": "shell",
+            "command": "make",
+            "options": {
+                "cwd": "${workspaceFolder}/gnu-efi"
+            },
+            "args": ["bootloader"]
+        },
+        {
+            "label": "Build Kernel",
+            "type": "shell",
+            "command": "make",
+            "options": {
+                "cwd": "${workspaceFolder}/kernel"
+            },
+            "args": ["build"]
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "command": "powershell.exe \".\\kernel\\run.bat\"",
+            
+        },
+        {
+            "label": "Build and Run",
+            "type": "shell",
+            "dependsOrder": "sequence",
+            "dependsOn":[
+                "Build Kernel",
+                "Run"
+            ]
+            
+        },
+        {
+            "label": "Clean All",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "clean"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
         }
     ]
 }
