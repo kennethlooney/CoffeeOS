@@ -32,7 +32,9 @@
         {
             "label": "Run",
             "type": "shell",
-            "command": "powershell.exe \".\\kernel\\run.bat\"",
+            "command": "powershell.exe Start-Process \".\\kernel\\run.bat\"",
+            
+           
             
         },
         {
@@ -40,7 +42,7 @@
             "type": "shell",
             "dependsOrder": "sequence",
             "dependsOn":[
-                "Build Kernel",
+                "Build All",
                 "Run"
             ]
             
@@ -54,6 +56,17 @@
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "label": "Clean Kernel",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "clean"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/kernel"
             }
         }
     ]
