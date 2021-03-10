@@ -7,12 +7,13 @@ LDS = kernel.ld
 CC = gcc
 LD = ld
 
-CFLAGS = -ffreestanding -fshort-wchar -O0 -g
+CFLAGS = -Iinclude -ffreestanding -fshort-wchar  -O0 -g
 LDFLAGS = -T $(LDS) -static -Bsymbolic -nostdlib
 
 SRCDIR := src
 OBJDIR := lib
 BUILDDIR = bin
+FONTDIR = fonts
 BOOTEFI := $(GNUEFI)/x86_64/bootloader/main.efi
 
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
@@ -30,10 +31,14 @@ buildimg:
 	dd if=/dev/zero of=$(BUILDDIR)/$(OSNAME).hdd bs=512 count=93750
 	mformat -i $(BUILDDIR)/$(OSNAME).hdd -f 1440 ::
 	mmd -i $(BUILDDIR)/$(OSNAME).hdd ::/EFI
+	mmd -i $(BUILDDIR)/$(OSNAME).hdd ::/fonts
 	mmd -i $(BUILDDIR)/$(OSNAME).hdd ::/EFI/BOOT
 	mcopy -i $(BUILDDIR)/$(OSNAME).hdd $(BOOTEFI) ::/EFI/BOOT
 	mcopy -i $(BUILDDIR)/$(OSNAME).hdd startup.nsh ::
 	mcopy -i $(BUILDDIR)/$(OSNAME).hdd $(BUILDDIR)/kernel.elf ::
+	mcopy -i $(BUILDDIR)/$(OSNAME).hdd $(FONTDIR)/zap-light16.psf ::/fonts
+	mcopy -i $(BUILDDIR)/$(OSNAME).hdd $(FONTDIR)/zap-light18.psf ::/fonts
+
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@echo !=== COMPILING $^

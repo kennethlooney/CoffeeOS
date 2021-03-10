@@ -42,7 +42,6 @@
             "type": "shell",
             "dependsOrder": "sequence",
             "dependsOn":[
-                "Clean All",
                 "Build All",
                 "Run"
             ]
