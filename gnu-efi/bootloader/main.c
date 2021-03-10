@@ -129,5 +129,7 @@ EFI_STATUS efi_main (EFI_HANDLE imageHandle, EFI_SYSTEM_TABLE *systemTable) {
 	}
 
 	Print(L"Kernel Loaded.\r\n");
+	int (*KernelStart)() = ((__attribute__((sysv_abi)) int (*)() ) header.e_entry);
+	Print(L"%d\r\n", KernelStart());
 	 return EFI_SUCCESS;
 }

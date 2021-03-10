@@ -1,4 +1,7 @@
 int _start()
 {
-    return 1234;
+    int a = 10;
+    int b = a * 100;
+
+    return b;
 }
