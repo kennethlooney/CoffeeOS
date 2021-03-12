@@ -18,6 +18,17 @@ EFI_SYSTEM_TABLE* SystemTable;
 
 #define PSF1_MAGIC0 0x36
 #define PSF1_MAGIC1 0x04
+
+#define PSF2_MAGIC0 0x72
+#define PSF2_MAGIC1 0xb5
+#define PSF2_MAGIC2 0x4a
+#define PSF2_MAGIC3 0x86
+#define PSF2_HAS_UNICODE_TABLE 0x01
+#define PSF2_MAXVERSION 0
+#define PSF2_SEPERATOR 0xFF
+#define PSF2_STARTSEQ 0xFE
+
+ 
 typedef struct {
 	unsigned char magic[2];
 	unsigned char mode;
@@ -27,6 +38,7 @@ typedef struct {
 	PSF1_HEADER* psf1_Header;
 	void* glyphBuffer;
 } PSF1_FONT;
+ 
 
  
 FRAMEBUFFER framebuffer;
@@ -87,7 +99,7 @@ EFI_FILE* LoadFile(EFI_FILE* Directory, CHAR16* Path)
 	// We did find the file so return it.
 	return LoadedFile;
 }
-PSF1_FONT* LoadConsoleFont(EFI_FILE* Directory, CHAR16* Path)
+PSF1_FONT* LoadPsf1Font(EFI_FILE* Directory, CHAR16* Path)
 {
 	EFI_FILE* font = LoadFile(Directory, Path);
 	if(font == NULL) return NULL;
@@ -118,6 +130,9 @@ PSF1_FONT* LoadConsoleFont(EFI_FILE* Directory, CHAR16* Path)
 	finishedFont->glyphBuffer = glyphBuffer;
 	return finishedFont;
 }
+
+ 
+
 int memcmp(const void* aptr, const void* bptr, size_t n)
 {
 	const unsigned char* a = aptr, *b = bptr;
@@ -204,7 +219,7 @@ EFI_STATUS efi_main (EFI_HANDLE imageHandle, EFI_SYSTEM_TABLE *systemTable) {
 	FRAMEBUFFER* newFrameBuffer = InitializeGOP();
 	Print(L"Kernel Loaded.\r\n");
 	void (*KernelStart)(FRAMEBUFFER* buffer, PSF1_FONT* font) = ((__attribute__((sysv_abi)) void (*)(FRAMEBUFFER* buffer, PSF1_FONT* font) ) header.e_entry);
-	PSF1_FONT* newFont = LoadConsoleFont(NULL,L"fonts\\zap-light18.psf");
+	PSF1_FONT* newFont = LoadPsf1Font(NULL,L"fonts\\zap-light18.psf");
 	if(newFont == NULL)
 	{
 		Print(L"Font is not valid or is not found.\r\n");
