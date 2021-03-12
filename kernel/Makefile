@@ -5,9 +5,11 @@ GNUEFI = ../gnu-efi
 OVMFDIR = ../OVMFbin
 LDS = kernel.ld
 CC = gcc
+ 
 LD = ld
 
-CFLAGS = -Iinclude -ffreestanding -fshort-wchar  -O0 -g
+CFLAGS = -Iinclude -ffreestanding -fshort-wchar -nostdlib -fno-builtin -fno-rtti -fno-exceptions -O0 -g
+
 LDFLAGS = -T $(LDS) -static -Bsymbolic -nostdlib
 
 SRCDIR := src
@@ -18,8 +20,10 @@ BOOTEFI := $(GNUEFI)/x86_64/bootloader/main.efi
 
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 
-SRC = $(call rwildcard,$(SRCDIR),*.c)          
-OBJS = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
+SRC = $(call rwildcard,$(SRCDIR),*.cpp) 
+        
+OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRC))
+ 
 DIRS = $(wildcard $(SRCDIR)/*)
 
 setup:
@@ -38,16 +42,20 @@ buildimg:
 	mcopy -i $(BUILDDIR)/$(OSNAME).hdd $(BUILDDIR)/kernel.elf ::
 	mcopy -i $(BUILDDIR)/$(OSNAME).hdd $(FONTDIR)/zap-light16.psf ::/fonts
 	mcopy -i $(BUILDDIR)/$(OSNAME).hdd $(FONTDIR)/zap-light18.psf ::/fonts
+	mcopy -i $(BUILDDIR)/$(OSNAME).hdd $(FONTDIR)/zap-light24.psf ::/fonts
 
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@echo !=== COMPILING $^
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $^ -o $@
 
+ 
+
+
 link: $(OBJS)
 	@echo !=== LINKING
-	$(LD) $(LDFLAGS) -o $(BUILDDIR)/kernel.elf $(OBJS)
+	$(LD) $(LDFLAGS) -o $(BUILDDIR)/kernel.elf $(OBJS) $(OBJS2)
 
 kernel: link
 

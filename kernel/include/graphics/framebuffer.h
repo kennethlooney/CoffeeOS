@@ -2,7 +2,7 @@
 #define COFFEE_GRAPHICS_FRAMEBUFFER_H
 #include <stddef.h>
  
-        typedef struct
+        struct Framebuffer
         {
             void *BaseAddress;
             size_t BufferSize;
@@ -10,7 +10,7 @@
             unsigned int Height;
             unsigned int PixelsPerScanLine;
 
-        } FRAMEBUFFER;
+        };
 
 #endif
     
